@@ -1,6 +1,7 @@
 
 from fastapi import APIRouter, Depends
 from app.api.deps import get_token_header
+from app.ai.culculate import get_experience_point_by_text
 from app.models.experience_points import (
     ExperiencePoint,
     ExperiencePointPublic, 
@@ -34,8 +35,11 @@ async def create_experience_points(experience_point_creare: ExperiencePointCreat
 
 @router.post("/culculate", response_model=CulculatedExperiencePoint, dependencies=[Depends(get_token_header)])
 async def calculate_experience_points(description: str):
+
+
+
     return {
-        "points": 0
+        "points": get_experience_point_by_text(description)
     }
 
 @router.get("/summary", response_model=ExperiencePointSummary, dependencies=[Depends(get_token_header)])
