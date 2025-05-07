@@ -23,9 +23,9 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=ExperiencePointPublic, dependencies=[Depends(get_token_header)])
-async def create_experience_points(experience_point_creare: ExperiencePointCreate, session: SessionDep):
+async def create_experience_points(experience_point_create: ExperiencePointCreate, session: SessionDep):
 
-    db_experience_point = ExperiencePoint.model_validate(experience_point_creare)
+    db_experience_point = ExperiencePoint.model_validate(experience_point_create)
     session.add(db_experience_point)
     session.commit()
     session.refresh(db_experience_point)

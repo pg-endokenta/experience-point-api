@@ -4,11 +4,12 @@ from fastapi import Header, HTTPException
 from sqlmodel import Session
 from app.core.db import engine
 from fastapi import Depends
+from app.core.config import settings
 
 
-async def get_token_header(x_token: Annotated[str, Header()]):
-    if x_token != "fake-super-secret-token":
-        raise HTTPException(status_code=400, detail="X-Token header invalid")
+async def get_token_header(access_token: Annotated[str, Header()]):
+    if access_token != str(settings.ACCESS_TOKEN):
+        raise HTTPException(status_code=400, detail="Access Token header invalid")
 
 def get_session():
     with Session(engine) as session:
