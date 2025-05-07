@@ -33,7 +33,7 @@ async def create_experience_points(experience_point_create: ExperiencePointCreat
     return public_experience_point
 
 
-@router.post("/culculate", response_model=CulculatedExperiencePoint, dependencies=[Depends(get_token_header)])
+@router.post("/culculate/", response_model=CulculatedExperiencePoint, dependencies=[Depends(get_token_header)])
 async def calculate_experience_points(description: str):
 
 
@@ -42,7 +42,7 @@ async def calculate_experience_points(description: str):
         "points": get_experience_point_by_text(description)
     }
 
-@router.get("/summary", response_model=ExperiencePointSummary, dependencies=[Depends(get_token_header)])
+@router.post("/summary/", response_model=ExperiencePointSummary, dependencies=[Depends(get_token_header)])
 async def get_experience_points_summary(session: SessionDep):
     return {
         "today_experience" : get_today_experience(session),
